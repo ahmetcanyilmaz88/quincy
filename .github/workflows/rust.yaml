@@ -109,6 +109,8 @@ jobs:
         asset_path: ./target/release/quincy-client
         asset_name: quincy-client
         asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}        
 
     - uses: actions/upload-release-asset@v1
       name: Upload quincy-server binary
