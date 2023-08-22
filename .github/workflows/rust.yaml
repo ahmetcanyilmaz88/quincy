@@ -64,7 +64,7 @@ jobs:
   #         command: clippy
   #         args: --all-targets -- -D warnings
  
-  release:
+  release: 
     runs-on: ubuntu-latest
     steps: #line 69
     - name: Debug print github
