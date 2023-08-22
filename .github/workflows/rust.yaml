@@ -4,16 +4,15 @@ on:
   push:
     branches: ['main']
   pull_request:
+  release:
+    types: [created]
 
 jobs:
   test:
     strategy:
       matrix:
-#        unnecessary until macos-latest runs on arm64 arch
-#        os: [ubuntu-latest, macos-latest]
         os: [ubuntu-latest]
         rust: [stable, nightly]
-
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -39,11 +38,8 @@ jobs:
   lint:
     strategy:
       matrix:
-#        unnecessary until macos-latest runs on arm64 arch
-#        os: [ubuntu-latest, macos-latest]
         os: [ubuntu-latest]
         rust: [stable, nightly]
-
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -67,3 +63,40 @@ jobs:
         with:
           command: clippy
           args: --all-targets -- -D warnings
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout repository
+      - uses: actions-rs/toolchain@v1
+        name: Set up toolchain
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2
+        name: Cache toolchain and dependencies
+      - name: Build release binary
+        run: cargo build --release
+      - name: Upload quincy-client binary
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./target/release/quincy-client
+          asset_name: quincy-client
+          asset_content_type: application/octet-stream
+      - name: Upload quincy-server binary
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./target/release/quincy-server
+          asset_name: quincy-server
+          asset_content_type: application/octet-stream
+      - name: Upload quincy-users binary
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./target/release/quincy-users
+          asset_name: quincy-users
+          asset_content_type: application/octet-stream
