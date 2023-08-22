@@ -64,56 +64,56 @@ jobs:
   #         command: clippy
   #         args: --all-targets -- -D warnings
 
-release:
-  runs-on: ubuntu-latest
-  steps: #line 69
-  - name: Create Release
-    id: create_release
-    uses: actions/create-release@v1
-    with:
-      tag_name: ${{ github.ref }}
-      release_name: Release ${{ github.ref }}
-      draft: false
-      prerelease: false
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    runs-on: ubuntu-latest
+    steps: #line 69
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  - uses: actions/checkout@v2
-    name: Checkout repository
+    - uses: actions/checkout@v2
+      name: Checkout repository
 
-  - uses: actions-rs/toolchain@v1
-    name: Set up toolchain
-    with:
-      profile: minimal
-      toolchain: stable
-      override: true
+    - uses: actions-rs/toolchain@v1
+      name: Set up toolchain
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
 
-  - uses: Swatinem/rust-cache@v2
-    name: Cache toolchain and dependencies
+    - uses: Swatinem/rust-cache@v2
+      name: Cache toolchain and dependencies
 
-  - name: Build release binary
-    run: cargo build --release
+    - name: Build release binary
+      run: cargo build --release
 
-  - name: Upload quincy-client binary
-    uses: actions/upload-release-asset@v1
-    with:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      asset_path: ./target/release/quincy-client
-      asset_name: quincy-client
-      asset_content_type: application/octet-stream
+    - name: Upload quincy-client binary
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/release/quincy-client
+        asset_name: quincy-client
+        asset_content_type: application/octet-stream
 
-  - name: Upload quincy-server binary
-    uses: actions/upload-release-asset@v1
-    with:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      asset_path: ./target/release/quincy-server
-      asset_name: quincy-server
-      asset_content_type: application/octet-stream
+    - name: Upload quincy-server binary
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/release/quincy-server
+        asset_name: quincy-server
+        asset_content_type: application/octet-stream
 
-  - name: Upload quincy-users binary
-    uses: actions/upload-release-asset@v1
-    with:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-      asset_path: ./target/release/quincy-users
-      asset_name: quincy-users
-      asset_content_type: application/octet-stream
+    - name: Upload quincy-users binary
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/release/quincy-users
+        asset_name: quincy-users
+        asset_content_type: application/octet-stream
