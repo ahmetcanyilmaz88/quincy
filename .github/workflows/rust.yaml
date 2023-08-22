@@ -102,24 +102,24 @@ jobs:
     - name: Build release binary
       run: cargo build --release
 
-    - name: Upload quincy-client binary
-      uses: actions/upload-release-asset@v1
+    - uses: actions/upload-release-asset@v1
+      name: Upload quincy-client binary
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./target/release/quincy-client
         asset_name: quincy-client
         asset_content_type: application/octet-stream
 
-    - name: Upload quincy-server binary
-      uses: actions/upload-release-asset@v1
+    - uses: actions/upload-release-asset@v1
+      name: Upload quincy-server binary
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./target/release/quincy-server
         asset_name: quincy-server
         asset_content_type: application/octet-stream
 
-    - name: Upload quincy-users binary
-      uses: actions/upload-release-asset@v1
+    - uses: actions/upload-release-asset@v1
+      name: Upload quincy-users binary
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./target/release/quincy-users
