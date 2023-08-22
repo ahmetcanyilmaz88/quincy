@@ -67,6 +67,9 @@ jobs:
   release: 
     runs-on: ubuntu-latest
     steps: #line 69
+    - uses: actions/checkout@v2
+      name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV    
     - name: Debug print github
       run: echo "${{ toJson(github) }}"    
     - name: Branch name
@@ -79,15 +82,12 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: "$GITHUB_REF_NAME"
-        release_name: "Release $GITHUB_REF_NAME"
+        tag_name: $RELEASE_VERSION
+        release_name: ${{ env.RELEASE_VERSION }}
         draft: false
         prerelease: false 
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
-
-    - uses: actions/checkout@v2
-      name: Checkout repository
 
     - uses: actions-rs/toolchain@v1
       name: Set up toolchain
