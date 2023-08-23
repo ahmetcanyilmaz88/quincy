@@ -97,12 +97,15 @@ jobs:
       #     path: target/x86_64-unknown-linux-musl/release/quincy*
       - name: Prepare binaries
         run: |
-          find target/x86_64-unknown-linux-musl/release/
-
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: quincy-linux-x86_64.tar.gz
+          mkdir -p quincy-linux-binaries/x86_64-unknown-linux-musl
+          mv target/x86_64-unknown-linux-musl/release/quincy-client quincy-linux-binaries/x86_64-unknown-linux-musl/
+          mv target/x86_64-unknown-linux-musl/release/quincy-server quincy-linux-binaries/x86_64-unknown-linux-musl/
+          mv target/x86_64-unknown-linux-musl/release/quincy-users quincy-linux-binaries/x86_64-unknown-linux-musl/
+          tar zcf quincy-linux-x86_64.tar.gz -C quincy-linux-binaries/x86_64-unknown-linux-musl .
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: quincy-linux-x86_64.tar.gz
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
