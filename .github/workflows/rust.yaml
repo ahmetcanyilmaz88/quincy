@@ -100,7 +100,6 @@ jobs:
       #       target/x86_64-unknown-linux-musl/release/quincy-users
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
-      - uses: actions/checkout@v2
       - name: Prepare binaries
         run: |
           mkdir -p quincy-linux-binaries/x86_64-unknown-linux-musl
