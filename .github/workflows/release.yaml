@@ -35,3 +35,5 @@ jobs:
         with:
           files: quincy-linux-x86_64.tar.gz
 
+permissions:
+  contents: write
