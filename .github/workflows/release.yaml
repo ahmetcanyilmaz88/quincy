@@ -9,7 +9,7 @@ jobs:
   release:
     name: Release Linux x86_64
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    # if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v2
         name: Checkout repository
