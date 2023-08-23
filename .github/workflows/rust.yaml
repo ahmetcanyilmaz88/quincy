@@ -97,7 +97,7 @@ jobs:
       #     path: target/x86_64-unknown-linux-musl/release/quincy*
       - name: Prepare binaries
         run: |
-          mkdir quincy-linux-binaries/x86_64-unknown-linux-musl
+          mkdir -p quincy-linux-binaries/x86_64-unknown-linux-musl
           mv target/x86_64-unknown-linux-musl/release/quincy-client quincy-linux-binaries/x86_64-unknown-linux-musl/
           mv target/x86_64-unknown-linux-musl/release/quincy-server quincy-linux-binaries/x86_64-unknown-linux-musl/
           mv target/x86_64-unknown-linux-musl/release/quincy-users quincy-linux-binaries/x86_64-unknown-linux-musl/
