@@ -94,6 +94,7 @@ jobs:
       - name: Prepare binaries
         run: |
           find target/release
+          sleep 10
           mkdir quincy-linux-binaries
           mv target/release/quincy-client quincy-linux-binaries/
           mv target/release/quincy-server quincy-linux-binaries/
