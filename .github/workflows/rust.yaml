@@ -72,20 +72,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout repository
-      - uses: actions/checkout@v2
       - name: Build-musl
         uses: gmiam/rust-musl-action@master
         with:
           args: cargo build --target x86_64-unknown-linux-musl --release
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: quincy
-      #     path: |
-      #       target/x86_64-unknown-linux-musl/release/quincy-client
-      #       target/x86_64-unknown-linux-musl/release/quincy-server
-      #       target/x86_64-unknown-linux-musl/release/quincy-users
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       - name: Prepare binaries
         run: |
           mkdir -p quincy-linux-binaries/x86_64-unknown-linux-musl
@@ -97,7 +87,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: quincy-linux-x86_64.tar.gz
-
 
 permissions:
   contents: write
