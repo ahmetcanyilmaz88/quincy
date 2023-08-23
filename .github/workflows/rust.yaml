@@ -91,28 +91,29 @@ jobs:
         uses: gmiam/rust-musl-action@master
         with:
           args: cargo build --target x86_64-unknown-linux-musl --release
-      - uses: actions/upload-artifact@v3
-        with:
-          name: quincy
-          path: |
-            target/x86_64-unknown-linux-musl/release/quincy-client
-            target/x86_64-unknown-linux-musl/release/quincy-server
-            target/x86_64-unknown-linux-musl/release/quincy-users
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
-      # - name: Prepare binaries
-      #   run: |
-      #     mkdir -p quincy-linux-binaries/x86_64-unknown-linux-musl
-      #     mv target/x86_64-unknown-linux-musl/release/quincy-client quincy-linux-binaries/x86_64-unknown-linux-musl/
-      #     mv target/x86_64-unknown-linux-musl/release/quincy-server quincy-linux-binaries/x86_64-unknown-linux-musl/
-      #     mv target/x86_64-unknown-linux-musl/release/quincy-users quincy-linux-binaries/x86_64-unknown-linux-musl/
-      #     tar zcf quincy-linux-x86_64.tar.gz -C quincy-linux-binaries/x86_64-unknown-linux-musl .
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
+      # - uses: actions/upload-artifact@v3
       #   with:
-      #     files: quincy-linux-x86_64.tar.gz
+      #     name: quincy
+      #     path: |
+      #       target/x86_64-unknown-linux-musl/release/quincy-client
+      #       target/x86_64-unknown-linux-musl/release/quincy-server
+      #       target/x86_64-unknown-linux-musl/release/quincy-users
       #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+      - uses: actions/checkout@v2
+      - name: Prepare binaries
+        run: |
+          mkdir -p quincy-linux-binaries/x86_64-unknown-linux-musl
+          cp target/x86_64-unknown-linux-musl/release/quincy-client quincy-linux-binaries/x86_64-unknown-linux-musl/
+          cp target/x86_64-unknown-linux-musl/release/quincy-server quincy-linux-binaries/x86_64-unknown-linux-musl/
+          cp target/x86_64-unknown-linux-musl/release/quincy-users quincy-linux-binaries/x86_64-unknown-linux-musl/
+          tar zcf quincy-linux-x86_64.tar.gz -C quincy-linux-binaries/x86_64-unknown-linux-musl .
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: quincy-linux-x86_64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: write
