@@ -7,7 +7,6 @@ on:
       - 'v*'
   release:
     types: [created]
-  pull_request:
 
 jobs:
   linux-release:
@@ -36,23 +35,23 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: quincy-linux-x86_64.tar.gz
-  # release:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       name: Checkout repository
-  #     - uses: actions-rs/toolchain@v1
-  #       name: Set up toolchain
-  #       with:
-  #         profile: minimal
-  #         toolchain: stable
-  #         override: true
-  #     - uses: Swatinem/rust-cache@v2
-  #       name: Cache toolchain and dependencies
-  #     - uses: katyo/publish-crates@v2
-  #       name: Publish crate
-  #       with:
-  #         registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout repository
+      - uses: actions-rs/toolchain@v1
+        name: Set up toolchain
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2
+        name: Cache toolchain and dependencies
+      - uses: katyo/publish-crates@v2
+        name: Publish crate
+        with:
+          registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 
 permissions:
   contents: write
