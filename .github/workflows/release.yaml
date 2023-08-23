@@ -5,6 +5,7 @@ on:
     branches: ['main']
   release:
     types: [created]
+  pull_request:
 
 jobs:
   release:
