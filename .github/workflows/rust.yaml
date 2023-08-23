@@ -96,8 +96,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: quincy-linux-binaries.tar.gz
-        permissions:
-          contents: write
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -148,3 +146,6 @@ jobs:
   #       asset_path: ./target/release/quincy-users
   #       asset_name: quincy-users
   #       asset_content_type: application/octet-stream
+
+permissions:
+  contents: write
