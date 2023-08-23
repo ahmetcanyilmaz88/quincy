@@ -19,6 +19,8 @@ jobs:
         name: Checkout repository
       - name: Print github.ref value
         run: echo "github.ref = ${{ github.ref }}"        
+      - uses: Swatinem/rust-cache@v2
+        name: Cache toolchain and dependencies        
       - name: Build-musl
         uses: gmiam/rust-musl-action@master
         with:
