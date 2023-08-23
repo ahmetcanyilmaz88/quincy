@@ -96,8 +96,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: quincy-linux-binaries.tar.gz
-          permissions:
-            contents: write
+        permissions:
+          contents: write
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
