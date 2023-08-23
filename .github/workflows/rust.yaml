@@ -91,6 +91,8 @@ jobs:
         with:
           command: build
           args: --release --target x86_64-unknown-linux-musl
+        env:
+          TARGET_CC: x86_64-linux-musl-gcc
       - name: Prepare binaries
         run: |
           find target/release
