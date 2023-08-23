@@ -65,8 +65,8 @@ jobs:
   #         args: --all-targets -- -D warnings
  
 
-  release:
-    name: Release Linux Binaries
+  linux-x86_64:
+    name: Linux x86_64
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
@@ -77,6 +77,7 @@ jobs:
         with:
           profile: minimal
           toolchain: stable
+          target: x86_64-unknown-linux-musl
           override: true
       - uses: Swatinem/rust-cache@v2
         name: Cache toolchain and dependencies
@@ -91,62 +92,13 @@ jobs:
           mv target/release/quincy-client quincy-linux-binaries/
           mv target/release/quincy-server quincy-linux-binaries/
           mv target/release/quincy-users quincy-linux-binaries/
-          tar zcf quincy-linux-binaries.tar.gz -C quincy-linux-binaries .
+          tar zcf quincy-linux-x86_64.tar.gz -C quincy-linux-binaries .
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: quincy-linux-binaries.tar.gz
+          files: quincy-linux-x86_64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # release: 
-  #   runs-on: ubuntu-latest
-  #   steps: #line 69
-  #   - uses: actions/checkout@v2
-  #     name: Checkout repository
-
-  #   # - name: Debug print github
-  #   #   run: echo "${{ toJson(github) }}"    
-
-  #   - uses: actions-rs/toolchain@v1
-  #     name: Set up toolchain
-  #     with:
-  #       profile: minimal
-  #       toolchain: stable
-  #       override: true
-
-  #   - uses: Swatinem/rust-cache@v2
-  #     name: Cache toolchain and dependencies
-
-  #   - name: Build release binary
-  #     run: cargo build --release
-
-  #   - uses: actions/upload-release-asset@v1
-  #     name: Upload quincy-client binary
-  #     with:
-  #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #       asset_path: ./target/release/quincy-client
-  #       asset_name: quincy-client
-  #       asset_content_type: application/octet-stream
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.TOKEN }}        
-
-  #   - uses: actions/upload-release-asset@v1
-  #     name: Upload quincy-server binary
-  #     with:
-  #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #       asset_path: ./target/release/quincy-server
-  #       asset_name: quincy-server
-  #       asset_content_type: application/octet-stream
-
-  #   - uses: actions/upload-release-asset@v1
-  #     name: Upload quincy-users binary
-  #     with:
-  #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #       asset_path: ./target/release/quincy-users
-  #       asset_name: quincy-users
-  #       asset_content_type: application/octet-stream
-
 permissions:
   contents: write
-  
