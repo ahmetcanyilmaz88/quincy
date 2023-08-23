@@ -95,21 +95,21 @@ jobs:
         with:
           name: quincy
           path: target/x86_64-unknown-linux-musl/release/quincy*
-      - name: Prepare binaries
-        run: |
-          find target/release
-          sleep 10
-          mkdir quincy-linux-binaries
-          mv target/release/quincy-client quincy-linux-binaries/
-          mv target/release/quincy-server quincy-linux-binaries/
-          mv target/release/quincy-users quincy-linux-binaries/
-          tar zcf quincy-linux-x86_64.tar.gz -C quincy-linux-binaries .
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: quincy-linux-x86_64.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Prepare binaries
+      #   run: |
+      #     find target/release
+      #     sleep 10
+      #     mkdir quincy-linux-binaries
+      #     mv target/release/quincy-client quincy-linux-binaries/
+      #     mv target/release/quincy-server quincy-linux-binaries/
+      #     mv target/release/quincy-users quincy-linux-binaries/
+      #     tar zcf quincy-linux-x86_64.tar.gz -C quincy-linux-binaries .
+      # - name: Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: quincy-linux-x86_64.tar.gz
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: write
