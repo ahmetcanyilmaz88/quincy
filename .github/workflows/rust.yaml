@@ -72,20 +72,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout repository
-      - uses: awalsh128/cache-apt-pkgs-action@v1
-        name: apt musl-tools
-        with:
-          packages: musl-tools # provides musl-gcc
-          version: 1.0        
-      - uses: actions-rs/toolchain@v1
-        name: Set up toolchain
-        with:
-          profile: minimal
-          toolchain: stable
-          target: x86_64-unknown-linux-musl
-          override: true
-      - uses: Swatinem/rust-cache@v2
-        name: Cache toolchain and dependencies
       - uses: actions/checkout@v2
       - name: Build-musl
         uses: gmiam/rust-musl-action@master
@@ -111,8 +97,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: quincy-linux-x86_64.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
 permissions:
   contents: write
