@@ -13,6 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout repository
+      - name: Print github.ref value
+        run: echo "github.ref = ${{ github.ref }}"        
       - name: Build-musl
         uses: gmiam/rust-musl-action@master
         with:
