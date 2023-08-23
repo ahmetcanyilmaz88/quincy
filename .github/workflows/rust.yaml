@@ -86,13 +86,11 @@ jobs:
           override: true
       - uses: Swatinem/rust-cache@v2
         name: Cache toolchain and dependencies
-      - uses: actions-rs/cargo@v1
-        name: Build crate
+      - uses: actions/checkout@v2
+      - name: Build-musl
+        uses: gmiam/rust-musl-action@master
         with:
-          command: build
-          args: --release --target x86_64-unknown-linux-musl
-        env:
-          TARGET_CC: x86_64-linux-musl-gcc
+          args: cargo build --target $BUILD_TARGET --release
       - name: Prepare binaries
         run: |
           find target/release
